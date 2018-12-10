@@ -17,12 +17,30 @@ let bin_prog = [
     0xFF; // 7 Halt
     0x10; // 8 Load.c
     0x00; // 9 0
+
     0x40; // A Jump
     0x0F; // B F
+
     0x00; // C NOP
     0x10; // D Load.c
     0x09; // E 9
-    0x41; // F Jump.z
+
+    0x20; // F Store.c
+    0x00; // 10 R0
+    0x10; // 11 0x11
+
+    0x11; // 12 Load.r
+    0x00; // 13 0
+
+    0x02; // 14 Dup
+    0x32; // 15 Mul
+    0x21; // 16 Store.s
+    0x01; // 17 R1
+
+    0x11; // 18 Load.r
+    0x01; // 19 R2
+
+    0x40; // F Jump
     0x07; // 10 7
 
 ]

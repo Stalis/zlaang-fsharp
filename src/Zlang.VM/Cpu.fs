@@ -59,7 +59,7 @@ module Cpu =
         let memory =
             (Array.init
                 <| match mem_size with
-                    | None -> 32
+                    | None -> 128
                     | Some i -> i)
                     <| fun _ -> 0
 
