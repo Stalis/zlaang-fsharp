@@ -9,11 +9,13 @@ module Opcodes =
         | Load_r = 0x11
         | Store_c = 0x20
         | Store_s = 0x21
-        | Store_r = 0x22
         | Add = 0x30
         | Sub = 0x31
         | Mul = 0x32
         | Div = 0x33
+        | Jump = 0x40
+        | Jump_z = 0x41
+        | Jump_nz = 0x42
         | Halt = 0xFF
 
     let get_opcode (v: int): bool * Opcode =

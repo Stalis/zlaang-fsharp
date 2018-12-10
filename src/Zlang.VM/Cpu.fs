@@ -4,7 +4,6 @@ open System
 open System.Collections.Generic
 
 open Zlang.Bytecode.Opcodes
-open Zlang.Bytecode.Instructions
 open System.Diagnostics
 
 module Cpu =
@@ -139,33 +138,48 @@ module Cpu =
 
         member this.load_program prog address =
             match prog with
-            | cur :: rest -> memory.[address] <- cur; this.load_program rest (address + 1)
             | [] -> ()
+            | cur :: rest -> memory.[address] <- cur; this.load_program rest (address + 1)
 
         member this.decode_instruction value =
             let res = get_opcode value in
             match fst res with
             | false -> (sprintf "Invalid opcode: 0x%02X" value) |> Exception |> raise
             | true ->
-                instruction_of_opcode <| snd res
+                snd res
 
-        member this.run_instruction (instr: Instruction): result =
+        member this.run_instruction (opcode: Opcode): result =
             try
-                match instr.opcode with
+                match opcode with
                 | Opcode.Nop -> Success
                 | Opcode.Pop -> stack.Pop() |> ignore; Success
                 | Opcode.Dup -> stack.Peek() |> stack.Push; Success
                 | Opcode.Load_c -> this.fetch |> stack.Push; Success
+                | Opcode.Load_r -> this.fetch |> register_of_addr |> get_register |> stack.Push; Success
+                | Opcode.Store_c -> this.fetch |> register_of_addr |> set_register <| this.fetch; Success
+                | Opcode.Store_s -> this.fetch |> register_of_addr |> set_register <| stack.Pop (); Success
                 | Opcode.Add -> stack.Pop () + stack.Pop () |> stack.Push; Success
                 | Opcode.Sub -> stack.Pop () - stack.Pop () |> stack.Push; Success
                 | Opcode.Mul -> stack.Pop () * stack.Pop () |> stack.Push; Success
                 | Opcode.Div -> stack.Pop () / stack.Pop () |> stack.Push; Success
+                | Opcode.Jump -> this.fetch |> set_register PC; Success
+                | Opcode.Jump_z ->
+                    let br = this.fetch in
+                    if stack.Peek() = 0 then
+                        set_register PC br
+                    Success
+                | Opcode.Jump_nz ->
+                    let br = this.fetch in
+                    if stack.Peek() <> 0 then
+                        set_register PC br
+                    Success
                 | Opcode.Halt -> Halt
-                | _ -> (sprintf "Undefined opcode: %s\n" <| Opcode.GetName (typeof<Opcode>, instr.opcode)) |> Error
+                | _ -> (sprintf "Undefined opcode: %s\n" <| Opcode.GetName (typeof<Opcode>, opcode)) |> Error
             with
                 | Failure (e) -> e |> Error
 
         member this.run =
+            Debug.Print <| sprintf "[Debug] PC = 0x%02X\n" (get_register PC)
             match this.decode_instruction this.fetch
                 |> this.run_instruction with
                 | Error (e) -> e |> failwithf "[Error] %s"
