@@ -6,6 +6,7 @@
     <ProjectReference Include="..\Zlang.Bytecode\Zlang.Bytecode.fsproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cpu.fs" />
+    <Compile Include="Registers.fs" />
+    <Compile Include="Zvm.fs" />
   </ItemGroup>
 </Project>

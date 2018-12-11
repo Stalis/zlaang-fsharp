@@ -2,7 +2,7 @@
 open System
 
 open Zlang.Bytecode.Opcodes
-open Zlang.VM.Cpu
+open Zlang.VM
 open System.Xml
 
 let bin_prog = [
@@ -27,7 +27,7 @@ let bin_prog = [
 
     0x20; // F Store.c
     0x00; // 10 R0
-    0x10; // 11 0x11
+    0x10; // 11 0x10
 
     0x11; // 12 Load.r
     0x00; // 13 0
@@ -47,8 +47,8 @@ let bin_prog = [
 
 [<EntryPoint>]
 let main argv =
-    let vm = VirtualMachine() in
-    vm.load_program bin_prog 0
-    vm.run
+    let vm = Zvm.init 128 in
+    Zvm.load_dump bin_prog 0 vm;
+    Zvm.run vm;
 
     0 // return an integer exit code
