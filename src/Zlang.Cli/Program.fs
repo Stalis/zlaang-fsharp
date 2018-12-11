@@ -3,7 +3,6 @@ open System
 
 open Zlang.Bytecode.Opcodes
 open Zlang.VM
-open System.Xml
 
 let bin_prog = [
 (*0x0*)    Nop;                 // Nop

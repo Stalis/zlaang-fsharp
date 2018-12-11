@@ -1,4 +1,5 @@
 namespace Zlang.VM
+
 open System.Collections.Generic
 open System
 open Zlang.Bytecode
