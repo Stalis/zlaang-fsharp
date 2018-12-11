@@ -1,7 +1,8 @@
 namespace Zlang.VM
 
-open System.Collections.Generic
 open System
+open System.Diagnostics
+open System.Collections.Generic
 open Zlang.Bytecode
 
 module Zvm =
@@ -49,7 +50,7 @@ module Zvm =
         let inline register_of_addr v = Registers.register_of_addr v in
         let inline set_register r v = Registers.set_register vm.registers r v in
         let inline get_register r = Registers.get_register vm.registers r in
-
+        Debug.Print <| sprintf "Opcode: 0x%02X" opcode
         try
             match opcode with
             | Opcodes.Nop -> Success;

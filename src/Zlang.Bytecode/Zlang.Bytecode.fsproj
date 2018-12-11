@@ -4,5 +4,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Opcodes.fs" />
+    <Compile Include="Tokens.fs" />
+    <Compile Include="Assembler.fs" />
+    <Compile Include="Disassembler.fs" />
   </ItemGroup>
 </Project>
