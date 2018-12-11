@@ -1,0 +1,18 @@
+
+Nop	
+Load.c	4	
+Dup	
+Jump.nz	0x08	
+Mul	
+Halt	
+Load.c	0	
+Jump	0x0F	
+Nop	
+Load.c	9	
+Store.c	R0	16	
+Load.r	R0	
+Dup	
+Mul	
+Store.s	R1	
+Load.r	R1	
+Jump	0x07	
