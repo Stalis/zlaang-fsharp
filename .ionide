@@ -1,4 +1,0 @@
-[Fake]
-linuxPrefix = "zsh"
-command = "fake.sh"
-build = "build.fsx"
