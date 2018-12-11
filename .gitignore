@@ -1,7 +1,18 @@
-.fake
-.paket
-.vs
-.vscode
-paket-files
+# Builds
 **/bin
 **/obj
+
+# IDE
+.vs
+.vscode
+.ionide
+
+# FAKE
+.fake
+
+# Paket
+paket-files
+.paket
+
+# Other
+timetest
